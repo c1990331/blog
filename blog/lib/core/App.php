@@ -15,5 +15,6 @@ class App
     public static function init()
     {
     	Config::load();
+    	print_r(Config::get('session'));
     }
 }

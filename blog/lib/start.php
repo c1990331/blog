@@ -15,7 +15,7 @@ final class Start
         self::_create_dir();
 
         Config::load();
-		App::run();
+        App::init();
     }
     
     private static function _set_const()

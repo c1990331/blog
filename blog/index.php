@@ -6,6 +6,8 @@
  */
 define('APP_NAME','app');
 define('DEBUG',false);
+
+
 if(DEBUG){
     ini_set('dispatch_error','on');
 }else{

@@ -7,17 +7,16 @@ final class Config
     
     public static function load()
     {
-        if(is_file(APP_CONFIG_PATH.'/config.php')){
-            require APP_CONFIG_PATH.'/config.php';
-            if(isset($config)){
-	            self::$config = $config;
-            }
+        $file = APP_CONFIG_PATH.'/config.php';
+        if(is_file($file)){
+            
+             self::set(self::$config,include $file);
         }
         
         if(isset(self::$config['config_load'])){
-            foreach($file as $val){
+            foreach(self::$config['config_load'] as $val){
                 if(is_file(APP_CONFIG_PATH.'/'.$val.'.php')){
-                    require APP_CONFIG_PATH.'/'.$val.'.php';
+                    self::set($val,include APP_CONFIG_PATH.'/'.$val.'.php');
                 }
             }
         }
@@ -29,8 +28,8 @@ final class Config
      */
     public static function get($name)
     {
-        if(isset(self::$file[strtoupper($name)])){
-            return self::$file[strtoupper($name)];
+        if(isset(self::$config[strtolower($name)])){
+            return self::$config[strtolower($name)];
         }
         return ;
     }
@@ -44,8 +43,9 @@ final class Config
     public static function set($name,$value=null)
     {
         if(is_string($name)){
-            self::$file[strtoupper($name)] = $value;
-            return  true;
+            return self::$config[strtolower($name)] = $value;
+        }else if(empty($name)){
+            return self::$config = $value;
         }
         return;
     }
