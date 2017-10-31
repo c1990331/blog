@@ -9,14 +9,14 @@
 // | Author: yunwuxin <448901948@qq.com>
 // +----------------------------------------------------------------------
 
-namespace core\captcha;
+namespace core\vendor\captcha;
 
-// use think\Session;
+use core\cache\Session;
 
 class Captcha
 {
     protected $config = [
-        'seKey'    => 'ThinkPHP.CN',
+        'seKey'    => 'CORE_BLOG',
         // 验证码加密密钥
         'codeSet'  => '2345678abcdefhijkmnpqrstuvwxyzABCDEFGHJKLMNPQRTUVWXY',
         // 验证码字符集合
@@ -110,18 +110,18 @@ class Captcha
     {
         $key = $this->authcode($this->seKey) . $id;
         // 验证码不能为空
-        $secode = $_SESSION[$key];
+        $secode = Session::set($key);
         if (empty($code) || empty($secode)) {
             return false;
         }
         // session 过期
         if (time() - $secode['verify_time'] > $this->expire) {
-            $_SESSION[$key] =  '';
+            Session::delete($key);
             return false;
         }
 
         if ($this->authcode(strtoupper($code)) == $secode['verify_code']) {
-            $this->reset && $_SESSION[$key] = '';
+            $this->reset && Session::delete($key);
             return true;
         }
 
@@ -202,7 +202,7 @@ class Captcha
         $secode                = [];
         $secode['verify_code'] = $code; // 把校验码保存到session
         $secode['verify_time'] = time(); // 验证码创建时间
-        $_SESSION[$key . $id] =  $secode;
+        Session::set($key . $id, $secode);
         ob_start();
         // 输出图像
         header("Content-type:image/png");

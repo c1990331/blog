@@ -2,6 +2,7 @@
 namespace core;
 
 use core\Config;
+use core\cache\Session;
 
 class App
 {
@@ -15,6 +16,7 @@ class App
     public static function init()
     {
     	Config::load();
-    	print_r(Config::get('session'));
+    	Session::init(['prefix'=>'core']);
+//     	print_r(Config::get('session'));
     }
 }

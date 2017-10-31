@@ -4,6 +4,7 @@ namespace core;
 use core\App;
 use core\Config;
 use core\Route;
+use core\vendor\captcha\Captcha;
 
 final class Start
 {
@@ -16,6 +17,9 @@ final class Start
 
         Config::load();
         App::init();
+        $captcha = new Captcha();
+//         print_r(self::$classFile);die;
+        echo $captcha->entry();
     }
     
     private static function _set_const()
@@ -31,6 +35,7 @@ final class Start
         define('CACHE_PATH',CORE_PATH.'/cache'); // 缓存配置文件  redis memacached session
         define('TEMPLATE_PATH',CORE_PATH.'/template'); // 生成、检测模板缓存  
         define('COMMON_PATH',CORE_PATH.'/common'); // 存放函数文件
+        define('VENDOR_PATH',CORE_PATH.'/vendor/captcha'); // 其他核心类库
        
         define('APP_PATH',OWNER_PATH.'/'.APP_NAME);
         define('APP_COMMON_PATH',APP_PATH.'/common');
@@ -73,6 +78,7 @@ final class Start
     		TPL_PATH,
     		CACHE_PATH,
     		TEMPLATE_PATH,
+    	    VENDOR_PATH,
     	];
     	foreach($arr as $val){
     		if(is_file($val.'/'.$class.'.php')){
