@@ -19,4 +19,11 @@ class App
     	Session::init(['prefix'=>'core']);
 //     	print_r(Config::get('session'));
     }
+    /**
+     * 加载控制器和方法
+     */
+    public static function run()
+    {
+        print_r(file_get_contents('php://input'));
+    }
 }
