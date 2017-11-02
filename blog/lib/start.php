@@ -5,7 +5,6 @@ use core\App;
 use core\Config;
 use core\Route;
 use core\vendor\captcha\Captcha;
-use SebastianBergmann\Environment\Runtime;
 
 final class Start
 {
