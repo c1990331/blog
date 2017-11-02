@@ -22,14 +22,21 @@ final class Start
     }
     public static function twig()
     {
+
+        include TWIG_PATH.'/Autoloader.php';
+        \Twig_Autoloader::register();
         // 定义模板目录
-        $loader = new \Twig_Loader_Filesystem(CORE_PATH.'tpl');
+        $loader = new \Twig_Loader_Filesystem(CORE_PATH.'/tpl');
+
         //初始化
         $twig = new \Twig_Environment($loader,[
             'cache'=>RUNTIME_PATH.'/twig',
             'debug'=>true,
         ]);
-       print_r($twig);die;
+
+        $template = $twig->loadTemplate('index.html');
+        echo $template->render(array('the' => 'variables', 'go' => 'here'));
+
     }
     private static function _set_const()
     {
@@ -44,8 +51,9 @@ final class Start
         define('TEMPLATE_PATH',CORE_PATH.'/template'); // 生成、检测模板缓存  
         define('COMMON_PATH',CORE_PATH.'/common'); // 存放函数文件
         define('VENDOR_PATH',CORE_PATH.'/vendor/captcha'); // 其他核心类库
-        define('TWIG_PATH',CORE_PATH.'/vendor/twig/twig/lib/Twig/Loader/'); // 其他核心类库
-       
+
+        define('TWIG_PATH',CORE_PATH.'/vendor/twig/lib/Twig'); // 其他核心类库
+      
         define('APP_PATH',OWNER_PATH.'/'.APP_NAME);
         define('APP_COMMON_PATH',APP_PATH.'/common');
         define('APP_CONFIG_PATH',APP_PATH.'/config');
