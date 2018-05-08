@@ -1,0 +1,98 @@
+{{include('admin/header.html')}}
+	<body>
+		<div id="header">
+			<div class="col w5 bottomlast">
+				<a href="" class="logo">
+					<img src="{{constant('PUBLIC_URL')}}/images/admin/logo.gif" alt="Logo" />
+				</a>
+			</div>
+			<div class="col w5 last right bottomlast">
+				<p class="last">Hello <span class="strong">{{name}},</span> <a href="/admin/login/loginOut">Logout</a></p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div id="wrapper">
+			<div id="minwidth">
+				<div id="holder">
+					<div id="menu">
+						<div id="left"></div>
+						<div id="right"></div>
+						<ul>
+							<li>
+								<a href="/admin/user/index" class="selected"><span>Users</span></a>
+							</li>
+							{% for value in category %}
+							<li>
+								<a href="/admin/category/categorys?cate={{value.category_name}}"><span>{{value.category_name}}</span></a>
+							</li>
+							{% endfor %}
+						</ul>
+						<div class="clear"></div>
+					</div>
+					<div id="submenu">
+						<!-- <div class="modules_left">
+							<div class="module buttons">
+								<a href="" class="dropdown_button"><small class="icon bar_graph"></small><span>Statistics</span></a>
+								<div class="dropdown">
+									<div class="arrow"></div>
+									<div class="content">
+										<ul>
+											<li><span class="strong">All Users:</span> 5102</li>
+											<li><span class="strong">Active Users:</span> 5059</li>
+											<li><span class="strong">Pending Users:</span> 43</li>
+											<li><span class="strong">Subscriptions:</span> 4814</li>
+										</ul>
+										<a class="button red right close"><small class="icon cross"></small><span>Close</span></a>
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+						</div> -->
+						<div class="title">
+							Users
+						</div>
+						<div class="modules_right">
+							<div class="module search">
+								<form action="">
+									<p><input type="text" value="" name="user_search" placeholder=" Search..." /></p>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div id="desc">
+						<div class="body">
+							<div class="col w10 last">
+								<div class="content">
+									<div class="shelf">
+										<div class="left"></div>
+										<div class="right"></div>
+										<div class="inside">
+										{% for value in userList %}
+											<div class="books">
+												<div class="col w2">
+													<a href="">
+														<span>{{value.user}}</span>
+														<img src="{{constant('PUBLIC_URL')}}/images/admin/shelf_sample_image.png" title='{{ value.add_time|date("Y-m-d")}}' />
+													</a>
+												</div>
+											</div>
+										{% endfor %}
+										</div>
+										<div class="clear"></div>
+									</div>
+									
+									</div>
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="clear"></div>
+						<div id="body_footer">
+							<div id="bottom_left"><div id="bottom_right"></div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+{{include('admin/footer.html')}}

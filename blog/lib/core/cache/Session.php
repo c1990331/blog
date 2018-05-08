@@ -43,9 +43,10 @@ final class Session
     public static function get($name,$prefix=null)
     {
         empty(self::$init) && self::start();
-        
         $value = null;
-        if(isset($_SESSION[self::$config['prefix']][$name])){
+        if($prefix){
+            $value = $_SESSION[$prefix][$name];
+        }else if(isset(self::$config['prefix']) && isset($_SESSION[self::$config['prefix']][$name])){
             $value = $_SESSION[self::$config['prefix']][$name];
         }else if(isset($_SESSION[$name])){
             $value = $_SESSION[$name];
@@ -58,7 +59,7 @@ final class Session
     public static function clear($prefix = null)
     {
         empty(self::$init) && self::start();
-        $prefix = !is_null($prefix) ? $prefix : self::$config['prefix'];
+        $prefix = !is_null($prefix) ? $prefix : (isset(self::$config['prefix'])?self::$config['prefix']:'');
         if ($prefix) {
             unset($_SESSION[$prefix]);
         } else {

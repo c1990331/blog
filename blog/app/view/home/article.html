@@ -1,0 +1,47 @@
+{{include('home/header.html')}}
+<link rel="stylesheet" href="{{constant('PUBLIC_URL')}}/vendor/md-master/css/editormd.css" />
+
+<section class="container">
+  <div class="content-wrap">
+    <div class="content" style="margin-right:0px;">
+      <header class="article-header">
+        <h1 class="article-title"><a href="javascript:void(0)">{{article.title}}</a></h1>
+        <div class="article-meta"> <span class="item article-meta-time">
+          <time class="time" data-toggle="tooltip" data-placement="bottom" title="时间：{{article.add_time|date('Y-m-d H:i:s')}}"><i class="glyphicon glyphicon-time"></i> {{article.add_time|date('Y-m-d H:i:s')}}</time>
+          </span> <span class="item article-meta-source" data-toggle="tooltip" data-placement="bottom" title="来源：php程序员博客"><i class="glyphicon glyphicon-globe"></i> php程序员</span> <span class="item article-meta-category" data-toggle="tooltip" data-placement="bottom" title="栏目：{{cate_type}}"><i class="glyphicon glyphicon-list"></i> <a href="program" title="{{cate_type}}">{{cate_type}}</a></span> <!-- <span class="item article-meta-views" data-toggle="tooltip" data-placement="bottom" title="查看：120"><i class="glyphicon glyphicon-eye-open"></i> 共120人围观</span> --> <!-- <span class="item article-meta-comment" data-toggle="tooltip" data-placement="bottom" title="评论：0"><i class="glyphicon glyphicon-comment"></i> 0个不明物体</span> --> </div>
+      </header>
+      <article class="article-content">
+        	<div id="doc-content">
+        		<textarea style="display:none;"><br>
+{{article.content}}
+				</textarea>
+        	</div>
+      </article>
+      <div class="article-tags">标签：<a href="" rel="tag">{{cate_type}}</a></div>
+    </div>
+  </div>
+</section>
+<script src="{{constant('PUBLIC_URL')}}/vendor/md-master/editormd.min.js"></script>
+<script src="{{constant('PUBLIC_URL')}}/vendor/md-master/lib/marked.min.js"></script>
+<script src="{{constant('PUBLIC_URL')}}/vendor/md-master/lib/prettify.min.js"></script>
+
+<script src="{{constant('PUBLIC_URL')}}/vendor/md-master/lib/raphael.min.js"></script>
+<script src="{{constant('PUBLIC_URL')}}/vendor/md-master/lib/underscore.min.js"></script>
+<script src="{{constant('PUBLIC_URL')}}/vendor/md-master/lib/sequence-diagram.min.js"></script>
+<script src="{{constant('PUBLIC_URL')}}/vendor/md-master/lib/flowchart.min.js"></script>
+<script src="{{constant('PUBLIC_URL')}}/vendor/md-master/lib/jquery.flowchart.min.js"></script>
+
+ <script type="text/javascript">
+            $(function() {
+                var docContent;
+                docContent = editormd.markdownToHTML("doc-content", {
+                    htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                    emoji           : true,
+                    taskList        : true,
+                    tex             : true,  // 默认不解析
+                    flowChart       : true,  // 默认不解析
+                    sequenceDiagram : true,  // 默认不解析
+                });
+            });
+        </script>
+{{include('home/footer.html')}}

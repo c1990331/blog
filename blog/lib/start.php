@@ -4,7 +4,6 @@ namespace core;
 use core\App;
 use core\Config;
 use core\Route;
-use core\vendor\captcha\Captcha;
 
 final class Start
 {
@@ -13,31 +12,14 @@ final class Start
     {
          //初始化配置
         self::_set_const();
-        self::_create_dir();
-
+        $url = Route::url();
+       
         Config::load();
-        App::run();
-        self::twig();
-//         $captcha = new Captcha();
+
+        self::_create_dir();
+        App::run($url);
     }
-    public static function twig()
-    {
-
-        include TWIG_PATH.'/Autoloader.php';
-        \Twig_Autoloader::register();
-        // 定义模板目录
-        $loader = new \Twig_Loader_Filesystem(CORE_PATH.'/tpl');
-
-        //初始化
-        $twig = new \Twig_Environment($loader,[
-            'cache'=>RUNTIME_PATH.'/twig',
-            'debug'=>true,
-        ]);
-
-        $template = $twig->loadTemplate('index.html');
-        echo $template->render(array('the' => 'variables', 'go' => 'here'));
-
-    }
+    
     private static function _set_const()
     {
         $path = str_replace('\\', '/', __FILE__);
@@ -51,18 +33,7 @@ final class Start
         define('TEMPLATE_PATH',CORE_PATH.'/template'); // 生成、检测模板缓存  
         define('COMMON_PATH',CORE_PATH.'/common'); // 存放函数文件
         define('VENDOR_PATH',CORE_PATH.'/vendor/captcha'); // 其他核心类库
-
         define('TWIG_PATH',CORE_PATH.'/vendor/twig/lib/Twig'); // 其他核心类库
-      
-        define('APP_PATH',OWNER_PATH.'/'.APP_NAME);
-        define('APP_COMMON_PATH',APP_PATH.'/common');
-        define('APP_CONFIG_PATH',APP_PATH.'/config');
-        define('RUNTIME_PATH',APP_PATH.'/runtime'); // 其他核心类库
-        define('APP_CONTROLLER_PATH',APP_PATH.'/controller');
-        define('APP_MODEL_PATH',APP_PATH.'/model');
-        define('APP_PUBLIC_PATH',APP_PATH.'/public');
-        define('APP_VIEW_PATH',APP_PATH.'/view');
-
     }
     
     /**
@@ -72,38 +43,40 @@ final class Start
     {
         $arr = [
             APP_PATH,
-            APP_COMMON_PATH,
-            APP_CONFIG_PATH,
-            APP_MODEL_PATH,
-            APP_PUBLIC_PATH,
-            APP_VIEW_PATH,
+            APP_PATH.'/common',
+            APP_PATH.'/config',
+            APP_PATH.'/model',
+            APP_PATH.'/public',
+            APP_PATH.'/view',
         ];
         foreach($arr as $va){
             is_dir($va) || mkdir($va,0777,true);
+        }
+        // 引入函数
+        if(is_file(APP_PATH.'/common/function.php')){
+            include APP_PATH.'/common/function.php';
+        }
+        if(is_file(ROOT_PATH.'/'.APP_NAME.'/common/function.php')){
+            include ROOT_PATH.'/'.APP_NAME.'/common/function.php';
         }
     }
      // 自动加载
     public static function autoload($class)
     {
+        $class = str_replace('\\', '/', $class);
     	if(isset(self::$classFile[$class])){
     		return true;
     	}
     	$arr = [
     		ROOT_PATH,
-    		CORE_PATH,
-    		TPL_PATH,
-    		CACHE_PATH,
-    		TEMPLATE_PATH,
-    	    VENDOR_PATH,
     	    TWIG_PATH,
+    	    OWNER_PATH,
     	];
     	foreach($arr as $val){
     		if(is_file($val.'/'.$class.'.php')){
     			include $val.'/'.$class.'.php';
     			self::$classFile[$class] = $class;
     			return true;
-    		}else{
-    			return false;
     		}
     	}
     }

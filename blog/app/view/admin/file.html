@@ -1,0 +1,64 @@
+{{include('admin/header.html')}}
+<link rel="stylesheet" href="{{constant('PUBLIC_URL')}}/vendor/md-master/css/style.css" />
+ <link rel="stylesheet" href="{{constant('PUBLIC_URL')}}/vendor/md-master/css/editormd.css" />
+<body>
+<div class="ibox-content">
+<div class="panel-heading">
+	<form  action="/admin/OrderSystem/dispatch" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-1 control-label">标题</label>
+			<div class="col-sm-4">
+				<input type="text" name="title" placeholder="文章标题" class="form-control" value="">
+			</div>
+			<div class="col-sm-3">
+				<button type="button" class="btn btn-success" id="save" style="background-color:#5cb85c;">保存</button>
+				<a href="/admin/category/categorys?cate={{type}}" class="btn btn-default">取消</a>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-1 control-label">描述</label>
+			<div class="col-sm-6">
+				<textarea class="form-control" name="desc" style="height:100px;" placeholder="描述"></textarea>
+			</div>
+			<div class="col-sm-4">
+				<img src="" alt="..." class="img-thumbnail" id="img" style="width:100px;height:100px;">
+				<input type="file" class="btn btn-default" value="" id="uplode_file" name="uplode_file" style="width:95px;display:inline-block;"/>
+			</div>
+		</div>
+	
+	</form>
+</div>
+<div>
+
+    <div id="test-editormd">
+        <textarea style="display:none;" id="article"></textarea>
+    </div>
+
+</div>
+{{include('admin/footer.html')}}
+<script src="{{constant('PUBLIC_URL')}}/vendor/md-master/editormd.min.js"></script>
+<script src="{{constant('PUBLIC_URL')}}/js/admin/public.js"></script>
+<script src="{{constant('PUBLIC_URL')}}/js/admin/file.js?e33"></script>
+<script>
+var type = "{{type}}";
+var testEditor;
+
+$(function() {
+    testEditor = editormd("test-editormd", {
+        width   : "90%",
+        height  : 640,
+        syncScrolling : "single",
+        path    : "{{constant('PUBLIC_URL')}}/vendor/md-master/lib/"
+    });
+    
+    
+    // or
+    /* testEditor = editormd({
+        id      : "test-editormd",
+        width   : "90%",
+        height  : 640,
+        path    : "../lib/"
+    }); */
+    
+});
+</script>

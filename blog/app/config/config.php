@@ -2,7 +2,7 @@
 
 return [
     // 自定义配置文件
-    'config_load' => ['attr'],
+    'config_load' => ['attr','constants','database','route'],
     
     // session配置
     

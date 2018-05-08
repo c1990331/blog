@@ -1,0 +1,96 @@
+{{include('admin/header.html')}}
+	<body>
+		<div id="header">
+			<div class="col w5 bottomlast">
+				<a href="" class="logo">
+					<img src="{{constant('PUBLIC_URL')}}/images/admin/logo.gif" alt="Logo" />
+				</a>
+			</div>
+			<div class="col w5 last right bottomlast">
+				<p class="last">Hello <span class="strong">{{name}},</span> <a href="/admin/login/loginOut">Logout</a></p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div id="wrapper">
+			<div id="minwidth">
+				<div id="holder">
+					<div id="menu">
+						<div id="left"></div>
+						<div id="right"></div>
+						<ul>
+							<li>
+								<a href="/admin/user/index"><span>Users</span></a>
+							</li>
+							{% for value in category %}
+							<li>
+								<a href="/admin/category/categorys?cate={{value.category_name}}" class="{% if arr.type == value.category_name %} selected {% endif %}"><span>{{value.category_name}}</span></a>
+							</li>
+							{% endfor %}
+						</ul>
+						<div class="clear"></div>
+					</div>
+					<div id="submenu">
+						<div class="modules_left">
+							<div class="module buttons">
+								<a href="/admin/article/file?cate={{arr.type}}" class="btn btn-success"><small class="icon"></small><span>New Article</span></a>
+							</div>
+						</div>
+						<div class="title">
+							{{arr.type}}
+						</div>
+						<div class="modules_right">
+							<div class="module search">
+								<form id="search_keyword" action="/admin/category/categorys" method="GET">
+								<input type="hidden" name="cate" value="{{arr.type}}" />
+									<p><input type="text" value="{{arr.keyword}}" placeholder="Search..." name="user_search" /></p>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div id="desc">
+						<div class="body">
+							<div class="col w8 last">
+								<div class="content">
+								{% for value in arr.cate %}
+									<div class="shelf">
+										<div class="left"></div>
+										<div class="right"></div>
+										<div class="inside">
+										{% for val in value %}
+											<div class="books articles">
+												<div class="col w2">
+													<a href="/admin/article/detail?cate={{arr.type}}&id={{val._id.oid}}">
+														<span>{{val.title}}</span>
+														<small>{{val.description}}</small>
+													</a>
+												</div>
+											</div>
+										{% endfor %}
+										</div>
+										<div class="clear"></div>
+									</div>
+									{% endfor %}
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="clear"></div>
+						{% autoescape false %}
+						{{arr.pageHtml}}
+						{% endautoescape %}
+						<div id="body_footer">
+							<div id="bottom_left">
+							<div id="bottom_right"></div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+{{include('admin/footer.html')}}
+<script>
+	$("input[name='user_search']").blur(function(){
+		var val = $(this).val();
+		$('#search_keyword').submit();
+	});
+</script>

@@ -1,0 +1,41 @@
+{{include('admin/header.html')}}
+	<body>
+		<div id="wrapper_login">
+			<div id="menu">
+				<div id="left"></div>
+				<div id="right"></div>
+				<h2>Web Management System</h2>
+				<div class="clear"></div>		
+			</div>
+			<div id="desc">
+				<div class="body">
+					<div class="col w10 last bottomlast">
+						<form onclick="return false">
+							<p>
+								<label for="username">Username:</label>
+								<input type="text" name="name" value="" size="40" class="text" />
+								<br />
+							</p>
+							<p>
+								<label for="password">Password:</label>
+								<input type="password" name="password" value="" size="40" class="text" />
+								<br />
+							</p>
+							<p class="last" id="login">
+								<input type="type" value="Login" class="novisible" />
+								<a href="javascript:void(0)" class="button"><small class="icon play"></small><span>Login</span></a>
+								<br />
+							</p>
+							<div class="clear"></div>
+						</form>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+				<div id="body_footer">
+					<div id="bottom_left"><div id="bottom_right"></div></div>
+				</div>
+			</div>		
+		</div>
+{{include('admin/footer.html')}}
+<script src="{{constant('PUBLIC_URL')}}/js/admin/login.js?2018"></script>

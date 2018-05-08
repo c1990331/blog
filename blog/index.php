@@ -4,8 +4,11 @@
  *  2，加载函数库
  *  3，启动框架
  */
+date_default_timezone_set('PRC');
+
 define('APP_NAME','app');
-define('DEBUG',false);
+define('DEFAULT_MODULE','home');
+define('DEBUG',true);
 
 
 if(DEBUG){
@@ -13,6 +16,5 @@ if(DEBUG){
 }else{
     ini_set('dispatch_error','off');
 }
-
 
 require __DIR__.'/lib/start.php';
