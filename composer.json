@@ -1,0 +1,14 @@
+{
+    "name": "c1990331/blog",
+    "description": "blog",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "liming.cheng",
+            "email": "lm@bjesc.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
