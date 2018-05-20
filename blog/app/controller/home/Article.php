@@ -25,8 +25,13 @@ class Article extends Common
            $tableName = str_replace(' ', '', strtolower('clm_'.$table[$cate]));
        }
        $article =  [];
-       if($tableName){           
-           $article = $this->mongodb->select($tableName,['status'=>['$ne'=>0],'_id'=>new \MongoDB\BSON\ObjectId($id)],['status'=>0]);
+       if($tableName){       
+           try{
+               $article = $this->mongodb->select($tableName,['status'=>['$ne'=>0],'_id'=>new \MongoDB\BSON\ObjectId($id)],['status'=>0]);
+           }catch(\Exception $e){
+               return $this->fetch('home/404.html');
+           }
+        
        }
        $article = $article?$article->toArray()[0]:[];
        $title = isset($article->title)?$article->title:'php程序员';

@@ -105,6 +105,7 @@ class Article extends Common
      */
     public function detail()
     {
+        $post = Request::post();
         $param = Request::get();
         if(empty($param['cate'])) {
             redirect('admin/user/index');exit;
